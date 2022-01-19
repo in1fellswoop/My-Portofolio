@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Programming/Coding Projects</title>
+        <link rel="stylesheet" type = "text/css" href="../css/programming.css">
+    </head>
+    <body>
+        <header>
+            <h1>Programming/Coding Projects</h1>
+            <nav>
+                <ul>
+                    <li><a href="#html">HTML Projects</a></li>
+                    <li><a href="#js">JavaScript Projects</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id = "html">
+                <h3>HTML Projects</h3>
+            </section>
+
+            <section id="js">
+                <h3>JavaScript Projects</h3>
+
+                <section id="color-picker">
+                    <h4>Color Picker</h4>
+
+                    <div id = "color-box">Color Box</div>
+                    
+                    <section id="reset-color">
+                        <h5>You can reset the color back to white here:</h5>
+                        <button onclick="toHSLA(white())">Reset</button>
+                    </section>
+                    <section id="pick-primary">
+                        <h5>Select a primary color to begin with.</h5>
+                        <button onclick="toHSLA(red())">Red</button>
+                        <button onclick="toHSLA(orange())">Orange</button>
+                        <button onclick="toHSLA(yellow())">Yellow</button>
+                        <button onclick="toHSLA(green())">Green</button>
+                        <button onclick="toHSLA(blue())">Blue</button>
+                    </section>
+                    <section id="adjust-saturation">
+                        <h5>Adjust the saturation.</h5>
+                        <button onclick="toHSLA(moreSaturated(currColor))">More Saturated</button>
+                        <button onclick="toHSLA(lessSaturated(currColor))">Less Saturated</button>
+                    </section>
+                    <section id="adjust-lightness">
+                        <h5>Adjust the lightness.</h5>
+                        <button onclick="toHSLA(darken(currColor))">Darker</button>
+                        <button onclick="toHSLA(lighten(currColor))">Lighter</button>
+                    </section>
+                    <section id="adjust-transparency">
+                        <h5>Adjust transparency.</h5>
+                        <button onclick="toHSLA(moreTransparent(currColor))">More Transparent</button>
+                        <button onclick="toHSLA(lessTransparent(currColor))">Less Transparent</button>
+                    </section>
+                    <section id="mix-color">
+                        <h5>Mix with other colors.</h5>
+                        <button onclick="toHSLA(moreRed())">More Red</button>
+                        <button onclick="toHSLA(moreOrange())">More Orange</button>
+                        <button onclick="toHSLA(moreYellow())">More Yellow</button>
+                        <button onclick="toHSLA(moreGreen())">More Green</button>
+                        <button onclick="toHSLA(moreBlue())">More Blue</button>
+                        <button onclick="toHSLA(moreViolet())">More Violet</button>
+                    </section>
+                    <section id="color-output">
+                        <h5>Do you like the color?</h5>
+                        <button onclick="printHSLA()">Yes!</button>
+                        <p id="hsla-text-output"></p>
+                    </section>
+                </section>
+            </section>
+        </main>
+    </body>
+    <script>
+        // Converting to hsla format
+
+        function toHSLA(arrHSLA) {
+            const hsla = `hsla(${arrHSLA[0]}, ${arrHSLA[1]}%, ${arrHSLA[2]}%, ${arrHSLA[3]})`; // Storing hsla values into an hsla string
+            document.getElementById("color-box").style.background = hsla; // Setting background color to hsla values
+            return hsla; // Returning hsla values
+        }
+
+
+        // Obtaining current color
+
+        let currColor = []; // Creating a variable to store hsla values
+
+        // Allowing user to reset color
+
+        function white() { // Reseting color to white
+            currColor = [0, 0, 100, 1];
+            return currColor;
+        }
+
+        // Selecting Primary Color: will not mix colors only iterate between each option
+
+        function red() {
+            currColor = [0, 100, 50, 1];
+            return currColor;
+        }
+
+        function orange() {
+            currColor = [30, 100, 50, 1];
+            return currColor;
+        }
+
+        function yellow() {
+            currColor = [60, 100, 50, 1];
+            return currColor;
+        }
+
+        function green() {
+            currColor = [120, 100, 50, 1];
+            return currColor;
+        }
+
+        function blue() {
+            currColor = [240, 100, 50, 1];
+            return currColor;
+        }
+
+        // Creating an 'average function'
+
+        function colorAvg(colorArr, index, num) {
+            colorArr[index] = (colorArr[index] + num)/2; // Taking the average of current and target HSLA values
+            return colorArr;
+        }
+
+        // Adjust saturation
+
+        function moreSaturated(colorArr, s_Level = 100) {
+            currColor = colorAvg(colorArr, 1, s_Level);
+            return currColor;
+        }
+
+        function lessSaturated(colorArr, s_Level = 0) {
+            currColor = colorAvg(colorArr, 1, s_Level);
+            return currColor;
+        }
+
+        // Adjusting lightness/darkness
+
+        function darken(colorArr, l_Level = 0) {
+            currColor = colorAvg(colorArr, 2, l_Level);
+            return currColor;
+        }
+
+        function lighten(colorArr, l_Level = 100) {
+            currColor = colorAvg(colorArr, 2, l_Level);
+            return currColor;
+        }
+
+        // Adjusting transparency
+
+        function moreTransparent(colorArr, a_Level = 0) {
+            currColor = colorAvg(colorArr, 3, a_Level);
+            return currColor;
+        }
+
+        function lessTransparent(colorArr, a_Level = 1.0) {
+            currColor = colorAvg(colorArr, 3, a_Level);
+            return currColor;
+        }
+    
+        // Mixing colors
+
+        function moreRed() { // Included conditional to provide more 'natural' color change
+            currColor[0] < 180 ? currColor = colorAvg(currColor, 0, 0) : currColor = colorAvg(currColor, 0, 359);
+            return currColor;
+        }
+
+        function moreOrange() {
+            currColor = colorAvg(currColor, 0, 30);
+            return currColor;
+        }
+
+        function moreYellow() {
+            currColor = colorAvg(currColor, 0, 60);
+            return currColor;
+        }
+
+        function moreGreen() {
+            currColor = colorAvg(currColor, 0, 120);
+            return currColor;
+        }
+
+        function moreBlue() {
+            currColor = colorAvg(currColor, 0, 240);
+            return currColor;
+        }
+
+        function moreViolet() {
+            currColor = colorAvg(currColor, 0, 300);
+            return currColor;
+        }
+
+        // Printing desired color
+
+        function printHSLA() {
+            document.getElementById("hsla-text-output").innerHTML = toHSLA(currColor);
+        }
+    </script>
+</html>
