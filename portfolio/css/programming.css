@@ -1,0 +1,21 @@
+#js {
+    padding-left: 10px;
+    border-style: solid;
+    border-top-color: black;
+    border-bottom-color: black;
+}
+
+#color-picker {
+    padding-left: 10px;
+}
+
+#color-box {
+    width: 100px;
+    height: 100px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 25%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
